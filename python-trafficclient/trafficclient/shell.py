@@ -18,7 +18,7 @@ class OpenstackTrafficShell(object):
     def get_base_parser(self):
         parser = argparse.ArgumentParser(
                  prog = 'traffic',
-                 description = __doc__.stripe(),
+                 description = __doc__.strip(),
                  epilog = 'See "traffic help COMMAND"'
                           'for help on a special help .',
                  add_help = False,
