@@ -139,8 +139,8 @@ class OpenstackTrafficShell(object):
             help='DEPRECATED! Use --os-traffic-url.')
 
         parser.add_argument('--os-traffic-api-version',
-            default=utils.env('OS_IMAGE_API_VERSION', default='1'),
-            help='Defaults to env[OS_IMAGE_API_VERSION] or 1')
+            default=utils.env('OS_TRAFFIC_API_VERSION', default='1'),
+            help='Defaults to env[OS_TRAFFIC_API_VERSION] or 1')
 
         parser.add_argument('--os_traffic_api_version',
             help=argparse.SUPPRESS)
@@ -230,7 +230,7 @@ class OpenstackTrafficShell(object):
     def _get_endpoint(self, client, **kwargs):
         """Get an endpoint using the provided keystone client."""
         endpoint = client.service_catalog.url_for(
-                service_type=kwargs.get('service_type') or 'image',
+                service_type=kwargs.get('service_type') or 'traffic',
                 endpoint_type=kwargs.get('endpoint_type') or 'publicURL')
         return self._strip_version(endpoint)
 
@@ -254,7 +254,7 @@ class OpenstackTrafficShell(object):
         (options, args) = parser.parse_known_args(argv)
 
         # build available subcommands based on version
-        api_version = options.os_image_api_version
+        api_version = options.os_traffic_api_version
         subcommand_parser = self.get_subcommand_parser(api_version)
         self.parser = subcommand_parser
 
