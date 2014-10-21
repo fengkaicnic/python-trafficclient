@@ -343,9 +343,7 @@ class OpenstackTrafficShell(object):
         kwargs = {
             'token': token,
             'insecure': args.insecure,
-            'timeout': args.timeout,
-            'key_file': args.key_file,
-            'ssl_compression': args.ssl_compression
+            'timeout': args.timeout
         }
 
         client = client.Client(api_version, endpoint, **kwargs)
