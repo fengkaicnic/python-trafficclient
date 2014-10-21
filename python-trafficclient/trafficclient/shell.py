@@ -344,7 +344,6 @@ class OpenstackTrafficShell(object):
             'token': token,
             'insecure': args.insecure,
             'timeout': args.timeout,
-            'cert_file': args.cert_file,
             'key_file': args.key_file,
             'ssl_compression': args.ssl_compression
         }
