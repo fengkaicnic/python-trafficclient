@@ -11,7 +11,7 @@ import httplib2
 from keystoneclient.v2_0 import client as ksclient
 
 import trafficclient
-from trafficclient import client
+from trafficclient import client as tcclient
 from trafficclient import exc
 from trafficclient.common import utils
 
@@ -346,7 +346,7 @@ class OpenstackTrafficShell(object):
             'timeout': args.timeout
         }
 
-        client = client.Client(api_version, endpoint, **kwargs)
+        client = tcclient.Client(api_version, endpoint, **kwargs)
 
         try:
             args.func(client, args)
