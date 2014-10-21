@@ -77,6 +77,14 @@ class OpenstackTrafficShell(object):
         parser.add_argument('--os-tenant-id',
             default=utils.env('OS_TENANT_ID'),
             help='Defaults to env[OS_TENANT_ID]')
+        
+        parser.add_argument('--insecure',
+        default=utils.env('NOVACLIENT_INSECURE', default=False),
+        action='store_true',
+        help="Explicitly allow novaclient to perform \"insecure\" "
+             "SSL (https) requests. The server's certificate will "
+             "not be verified against any certificate authorities. "
+             "This option should be used with caution.")
 
         parser.add_argument('--os_tenant_id',
             help=argparse.SUPPRESS)
