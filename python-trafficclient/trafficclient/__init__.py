@@ -7,5 +7,5 @@ except ImportError:
     
 import trafficclient.versions
 
-__version__ = trafficclient.version.version_info.defered_version_string()
+__version__ = trafficclient.versions.version_info.defered_version_string()
     
