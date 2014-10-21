@@ -44,7 +44,7 @@ class OpenstackTrafficShell(object):
         parser.add_argument('-H', '--host',
             metavar='ADDRESS',
             help='DEPRECATED! Send a fully-formed endpoint using '
-                 '--os-image-url instead.')
+                 '--os-traffic-url instead.')
 
         #NOTE(bcwaldon): DEPRECATED
         parser.add_argument('-p', '--port',
@@ -53,7 +53,7 @@ class OpenstackTrafficShell(object):
             type=int,
             default=9898,
             help='DEPRECATED! Send a fully-formed endpoint using '
-                 '--os-image-url instead.')
+                 '--os-traffic-url instead.')
         
         parser.add_argument('--os-username',
             default=utils.env('OS_USERNAME'),
@@ -126,23 +126,23 @@ class OpenstackTrafficShell(object):
             dest='os_auth_token',
             help='DEPRECATED! Use --os-auth-token.')
 
-        parser.add_argument('--os-image-url',
-            default=utils.env('OS_IMAGE_URL'),
-            help='Defaults to env[OS_IMAGE_URL]')
+        parser.add_argument('--os-traffic-url',
+            default=utils.env('OS_TRAFFIC_URL'),
+            help='Defaults to env[OS_TRAFFIC_URL]')
 
-        parser.add_argument('--os_image_url',
+        parser.add_argument('--os_traffic_url',
             help=argparse.SUPPRESS)
 
         #NOTE(bcwaldon): DEPRECATED
         parser.add_argument('-U', '--url',
-            dest='os_image_url',
-            help='DEPRECATED! Use --os-image-url.')
+            dest='os_traffic_url',
+            help='DEPRECATED! Use --os-traffic-url.')
 
-        parser.add_argument('--os-image-api-version',
+        parser.add_argument('--os-traffic-api-version',
             default=utils.env('OS_IMAGE_API_VERSION', default='1'),
             help='Defaults to env[OS_IMAGE_API_VERSION] or 1')
 
-        parser.add_argument('--os_image_api_version',
+        parser.add_argument('--os_traffic_api_version',
             help=argparse.SUPPRESS)
 
         parser.add_argument('--os-service-type',
@@ -234,14 +234,14 @@ class OpenstackTrafficShell(object):
                 endpoint_type=kwargs.get('endpoint_type') or 'publicURL')
         return self._strip_version(endpoint)
 
-    def _get_image_url(self, args):
+    def _get_traffic_url(self, args):
         """Translate the available url-related options into a single string.
 
         Return the endpoint that should be used to talk to Glance if a
         clear decision can be made. Otherwise, return None.
         """
-        if args.os_image_url:
-            return args.os_image_url
+        if args.os_traffic_url:
+            return args.os_traffic_url
         elif args.host:
             scheme = 'https' if args.use_ssl else 'http'
             return '%s://%s:%s/' % (scheme, args.host, args.port)
@@ -276,12 +276,12 @@ class OpenstackTrafficShell(object):
         LOG.addHandler(logging.StreamHandler())
         LOG.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
-        image_url = self._get_image_url(args)
+        traffic_url = self._get_traffic_url(args)
         auth_reqd = (utils.is_authentication_required(args.func) and
-                     not (args.os_auth_token and image_url))
+                     not (args.os_auth_token and traffic_url))
 
         if not auth_reqd:
-            endpoint = image_url
+            endpoint = traffic_url
             token = args.os_auth_token
         else:
             if not args.os_username:
@@ -312,7 +312,7 @@ class OpenstackTrafficShell(object):
             _ksclient = self._get_ksclient(**kwargs)
             token = args.os_auth_token or _ksclient.auth_token
 
-            endpoint = args.os_image_url or \
+            endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
 
         kwargs = {
