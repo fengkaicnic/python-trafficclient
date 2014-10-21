@@ -6,12 +6,16 @@ import argparse
 import logging
 import re
 import sys
+import httplib2
 
 from keystoneclient.v2_0 import client as ksclient
 
 import trafficclient
+from trafficclient import client
 from trafficclient import exc
 from trafficclient.common import utils
+
+logger = logging.getLogger(__name__)
 
 class OpenstackTrafficShell(object):
     
@@ -29,9 +33,9 @@ class OpenstackTrafficShell(object):
                             action = 'store_true',
                             help = argparse.SUPPRESS,)
         parser.add_argument('-d', '--debug',
-                            default = bool(utils.env('TRAFFICCLIENT_DEBUG')),
+                            default = False,
                             action = 'store_true',
-                            help = 'Defaults to env[TRAFFICCLIENT_DEBUG]')
+                            help = 'print debugging output')
         
         parser.add_argument('-v', '--verbase',
                             default = False, action='store_true',
@@ -183,6 +187,19 @@ class OpenstackTrafficShell(object):
 
         return parser
     
+    def setup_debugging(self, debug):
+        if not debug:
+            return
+
+        streamhandler = logging.StreamHandler()
+        streamformat = "%(levelname)s (%(module)s:%(lineno)d) %(message)s"
+        streamhandler.setFormatter(logging.Formatter(streamformat))
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(streamhandler)
+
+        httplib2.debuglevel = 1
+
+    
     def _find_actions(self, subparsers, actions_module):
         for attr in (a for a in dir(actions_module) if a.startswith('do_')):
             # I prefer to be hypen-separated instead of underscores.
@@ -280,7 +297,7 @@ class OpenstackTrafficShell(object):
             self.do_help(args)
             return 0
 
-        LOG = logging.getLogger('glanceclient')
+        LOG = logging.getLogger('trafficclient')
         LOG.addHandler(logging.StreamHandler())
         LOG.setLevel(logging.DEBUG if args.debug else logging.INFO)
 
@@ -333,7 +350,7 @@ class OpenstackTrafficShell(object):
             'ssl_compression': args.ssl_compression
         }
 
-        client = trafficclient.Client(api_version, endpoint, **kwargs)
+        client = client.Client(api_version, endpoint, **kwargs)
 
         try:
             args.func(client, args)
