@@ -30,7 +30,7 @@ def do_create(cs, args):
     cs.traffic.create(args)
 
 @utils.arg('--instance',
-    defualt=None,
+    default=None,
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_delete(cs, args):
@@ -41,7 +41,7 @@ def do_list(cs, args):
     
 
 @utils.arg('--instance',
-    defualt=None,
+    default=None,
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_show(cs, args):
