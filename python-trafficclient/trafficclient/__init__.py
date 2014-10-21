@@ -1,11 +1,21 @@
-try:
-    import trafficclient.cient
-    Client = trafficclient.client.Client
-except ImportError:
-    import warnings
-    warnings.warn('could not import trafficclient', ImportWarning)
-    
-import trafficclient.version
+import inspect
+import os
 
-__version__ = trafficclient.version.version_info.defered_version_string()
+
+def _get_trafficclient_version():
+    """Read version from versioninfo file."""
+    mod_abspath = inspect.getabsfile(inspect.currentframe())
+    novaclient_path = os.path.dirname(mod_abspath)
+    version_path = os.path.join(novaclient_path, 'versioninfo')
+
+    if os.path.exists(version_path):
+        version = open(version_path).read().strip()
+    else:
+        version = "Unknown, couldn't find versioninfo file at %s"\
+                  % version_path
+
+    return version
+
+
+__version__ = _get_trafficclient_version()
     
