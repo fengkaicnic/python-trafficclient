@@ -15,7 +15,7 @@ from trafficclient.common import utils
 
 class OpenstackTrafficShell(object):
     
-    def get_base_parse(self):
+    def get_base_parser(self):
         parser = argparse.ArgumentParser(
                  prog = 'traffic',
                  description = __doc__.stripe(),
