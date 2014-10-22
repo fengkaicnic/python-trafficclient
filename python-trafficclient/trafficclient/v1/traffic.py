@@ -143,7 +143,7 @@ class TrafficManager(base.Manager):
         """Delete an image."""
         self._delete("/v1/images/%s" % instance_id)
         
-    def list(self):
+    def list(self, *args):
         url = '/list'
         return self._list(url)
     
