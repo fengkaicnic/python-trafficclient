@@ -156,10 +156,10 @@ class TrafficException(Exception):
                 # at least get the core message out if something happened
                 message = self.message
 
-        super(trafficException, self).__init__(message)
+        super(TrafficException, self).__init__(message)
 
 
-class EC2APIError(trafficException):
+class EC2APIError(TrafficException):
     message = _("Unknown")
 
     def __init__(self, message=None, code=None):
@@ -169,36 +169,36 @@ class EC2APIError(trafficException):
         super(EC2APIError, self).__init__(outstr)
 
 
-class DBError(trafficException):
+class DBError(TrafficException):
     """Wraps an implementation specific exception."""
     def __init__(self, inner_exception=None):
         self.inner_exception = inner_exception
         super(DBError, self).__init__(str(inner_exception))
 
 
-class DeprecatedConfig(trafficException):
+class DeprecatedConfig(TrafficException):
     message = _("Fatal call to deprecated config %(msg)s")
 
 
-class DecryptionFailure(trafficException):
+class DecryptionFailure(TrafficException):
     message = _("Failed to decrypt text")
 
 
-class VirtualInterfaceCreateException(trafficException):
+class VirtualInterfaceCreateException(TrafficException):
     message = _("Virtual Interface creation failed")
 
 
-class VirtualInterfaceMacAddressException(trafficException):
+class VirtualInterfaceMacAddressException(TrafficException):
     message = _("5 attempts to create virtual interface"
                 "with unique mac address failed")
 
 
-class GlanceConnectionFailed(trafficException):
+class GlanceConnectionFailed(TrafficException):
     message = _("Connection to glance host %(host)s:%(port)s failed: "
         "%(reason)s")
 
 
-class NotAuthorized(trafficException):
+class NotAuthorized(TrafficException):
     message = _("Not authorized.")
     code = 403
 
@@ -211,11 +211,11 @@ class PolicyNotAuthorized(NotAuthorized):
     message = _("Policy doesn't allow %(action)s to be performed.")
 
 
-class ImageNotAuthorized(trafficException):
+class ImageNotAuthorized(TrafficException):
     message = _("Not authorized for image %(image_id)s.")
 
 
-class Invalid(trafficException):
+class Invalid(TrafficException):
     message = _("Unacceptable parameters.")
     code = 400
 
@@ -236,7 +236,7 @@ class InvalidKeypair(Invalid):
     message = _("Keypair data is invalid")
 
 
-class SfJsonEncodeFailure(trafficException):
+class SfJsonEncodeFailure(TrafficException):
     message = _("Failed to load data into json format")
 
 
@@ -417,12 +417,12 @@ class InvalidUUID(Invalid):
     message = _("Expected a uuid but received %(uuid)s.")
 
 
-class ConstraintNotMet(trafficException):
+class ConstraintNotMet(TrafficException):
     message = _("Constraint not met.")
     code = 412
 
 
-class NotFound(trafficException):
+class NotFound(TrafficException):
     message = _("Resource could not be found.")
     code = 404
 
@@ -467,11 +467,11 @@ class SnapshotNotFound(NotFound):
     message = _("Snapshot %(snapshot_id)s could not be found.")
 
 
-class VolumeIsBusy(trafficException):
+class VolumeIsBusy(TrafficException):
     message = _("deleting volume %(volume_name)s that has snapshot")
 
 
-class SnapshotIsBusy(trafficException):
+class SnapshotIsBusy(TrafficException):
     message = _("deleting snapshot %(snapshot_name)s that has "
                 "dependent volumes")
 
@@ -480,11 +480,11 @@ class ISCSITargetNotFoundForVolume(NotFound):
     message = _("No target id found for volume %(volume_id)s.")
 
 
-class ISCSITargetCreateFailed(trafficException):
+class ISCSITargetCreateFailed(TrafficException):
     message = _("Failed to create iscsi target for volume %(volume_id)s.")
 
 
-class ISCSITargetRemoveFailed(trafficException):
+class ISCSITargetRemoveFailed(TrafficException):
     message = _("Failed to remove iscsi target for volume %(volume_id)s.")
 
 
@@ -519,11 +519,11 @@ class StorageRepositoryNotFound(NotFound):
     message = _("Cannot find SR to read/write VDI.")
 
 
-class NetworkInUse(trafficException):
+class NetworkInUse(TrafficException):
     message = _("Network %(network_id)s is still in use.")
 
 
-class NetworkNotCreated(trafficException):
+class NetworkNotCreated(TrafficException):
     message = _("%(req)s is required to create a network.")
 
 
@@ -556,7 +556,7 @@ class NetworkNotFoundForProject(NotFound):
                 "is not assigned to the project %(project_id)s.")
 
 
-class NetworkHostNotSet(trafficException):
+class NetworkHostNotSet(TrafficException):
     message = _("Host is not set to the network (%(network_id)s).")
 
 
@@ -564,7 +564,7 @@ class DatastoreNotFound(NotFound):
     message = _("Could not find the datastore reference(s) which the VM uses.")
 
 
-class PortInUse(trafficException):
+class PortInUse(TrafficException):
     message = _("Port %(port_id)s is still in use.")
 
 
@@ -598,12 +598,12 @@ class FixedIpNotFoundForNetwork(FixedIpNotFound):
                 "network (%(network_uuid)s).")
 
 
-class FixedIpAlreadyInUse(trafficException):
+class FixedIpAlreadyInUse(TrafficException):
     message = _("Fixed IP address %(address)s is already in use on instance "
                 "%(instance_uuid)s.")
 
 
-class FixedIpAssociatedWithMultipleInstances(trafficException):
+class FixedIpAssociatedWithMultipleInstances(TrafficException):
     message = _("More than one instance is associated with fixed ip address "
                 "'%(address)s'.")
 
@@ -612,7 +612,7 @@ class FixedIpInvalid(Invalid):
     message = _("Fixed IP address %(address)s is invalid.")
 
 
-class NoMoreFixedIps(trafficException):
+class NoMoreFixedIps(TrafficException):
     message = _("Zero fixed ips available.")
 
 
@@ -621,7 +621,7 @@ class NoFixedIpsDefined(NotFound):
 
 
 #TODO(bcwaldon): EOL this exception!
-class Duplicate(trafficException):
+class Duplicate(TrafficException):
     pass
 
 
@@ -650,11 +650,11 @@ class NoMoreFloatingIps(FloatingIpNotFound):
     safe = True
 
 
-class FloatingIpAssociated(trafficException):
+class FloatingIpAssociated(TrafficException):
     message = _("Floating ip %(address)s is associated.")
 
 
-class FloatingIpNotAssociated(trafficException):
+class FloatingIpNotAssociated(TrafficException):
     message = _("Floating ip %(address)s is not associated.")
 
 
@@ -728,7 +728,7 @@ class ReservationNotFound(QuotaNotFound):
     message = _("Quota reservation %(uuid)s could not be found.")
 
 
-class OverQuota(trafficException):
+class OverQuota(TrafficException):
     message = _("Quota exceeded for resources: %(overs)s")
 
 
@@ -858,15 +858,15 @@ class ClassNotFound(NotFound):
     message = _("Class %(class_name)s could not be found: %(exception)s")
 
 
-class NotAllowed(trafficException):
+class NotAllowed(TrafficException):
     message = _("Action not allowed.")
 
 
-class ImageRotationNotAllowed(trafficException):
+class ImageRotationNotAllowed(TrafficException):
     message = _("Rotation is not allowed for snapshots")
 
 
-class RotationRequiredForBackup(trafficException):
+class RotationRequiredForBackup(TrafficException):
     message = _("Rotation param is required for backup image_type")
 
 
@@ -891,65 +891,65 @@ class VolumeTypeExists(Duplicate):
     message = _("Volume Type %(name)s already exists.")
 
 
-class InvalidSharedStorage(trafficException):
+class InvalidSharedStorage(TrafficException):
     message = _("%(path)s is not on shared storage: %(reason)s")
 
 
-class InvalidLocalStorage(trafficException):
+class InvalidLocalStorage(TrafficException):
     message = _("%(path)s is not on local storage: %(reason)s")
 
 
-class MigrationError(trafficException):
+class MigrationError(TrafficException):
     message = _("Migration error") + ": %(reason)s"
 
 
-class MalformedRequestBody(trafficException):
+class MalformedRequestBody(TrafficException):
     message = _("Malformed message body: %(reason)s")
 
 
 # NOTE(johannes): NotFound should only be used when a 404 error is
 # appropriate to be returned
-class ConfigNotFound(trafficException):
+class ConfigNotFound(TrafficException):
     message = _("Could not find config at %(path)s")
 
 
-class PasteAppNotFound(trafficException):
+class PasteAppNotFound(TrafficException):
     message = _("Could not load paste app '%(name)s' from %(path)s")
 
 
-class CannotResizeToSameFlavor(trafficException):
+class CannotResizeToSameFlavor(TrafficException):
     message = _("When resizing, instances must change flavor!")
 
 
-class ImageTooLarge(trafficException):
+class ImageTooLarge(TrafficException):
     message = _("Image is larger than instance type allows")
 
 
-class InstanceTypeMemoryTooSmall(trafficException):
+class InstanceTypeMemoryTooSmall(TrafficException):
     message = _("Instance type's memory is too small for requested image.")
 
 
-class InstanceTypeDiskTooSmall(trafficException):
+class InstanceTypeDiskTooSmall(TrafficException):
     message = _("Instance type's disk is too small for requested image.")
 
 
-class InsufficientFreeMemory(trafficException):
+class InsufficientFreeMemory(TrafficException):
     message = _("Insufficient free memory on compute node to start %(uuid)s.")
 
 
-class CouldNotFetchMetrics(trafficException):
+class CouldNotFetchMetrics(TrafficException):
     message = _("Could not fetch bandwidth/cpu/disk metrics for this host.")
 
 
-class trafficlidHost(trafficException):
+class trafficlidHost(TrafficException):
     message = _("No valid host was found. %(reason)s")
 
 
-class WillNotSchedule(trafficException):
+class WillNotSchedule(TrafficException):
     message = _("Host %(host)s is not up or doesn't exist.")
 
 
-class QuotaError(trafficException):
+class QuotaError(TrafficException):
     message = _("Quota exceeded") + ": code=%(code)s"
     code = 413
     headers = {'Retry-After': 0}
@@ -996,7 +996,7 @@ class SecurityGroupLimitExceeded(QuotaError):
     message = _("Maximum number of security groups or rules exceeded")
 
 
-class AggregateError(trafficException):
+class AggregateError(TrafficException):
     message = _("Aggregate %(aggregate_id)s: action '%(action)s' "
                 "caused an error: %(reason)s.")
 
@@ -1026,17 +1026,17 @@ class DuplicateSfVolumeNames(Duplicate):
     message = _("Detected more than one volume with name %(vol_name)s")
 
 
-class VolumeTypeCreateFailed(trafficException):
+class VolumeTypeCreateFailed(TrafficException):
     message = _("Cannot create volume_type with "
                 "name %(name)s and specs %(extra_specs)s")
 
 
-class VolumeBackendAPIException(trafficException):
+class VolumeBackendAPIException(TrafficException):
     message = _("Bad or unexpected response from the storage volume "
                 "backend API: %(data)s")
 
 
-class NfsException(trafficException):
+class NfsException(TrafficException):
     message = _("Unknown NFS exception")
 
 
@@ -1048,17 +1048,17 @@ class NfsNoSuitableShareFound(NotFound):
     message = _("There is no share which can host %(volume_size)sG")
 
 
-class InstanceTypeCreateFailed(trafficException):
+class InstanceTypeCreateFailed(TrafficException):
     message = _("Unable to create instance type")
 
 
-class InstancePasswordSetFailed(trafficException):
+class InstancePasswordSetFailed(TrafficException):
     message = _("Failed to set admin password on %(instance)s "
                 "because %(reason)s")
     safe = True
 
 
-class SolidFireAPIException(trafficException):
+class SolidFireAPIException(TrafficException):
     message = _("Bad response from SolidFire API")
 
 
@@ -1082,15 +1082,15 @@ class InvalidInstanceIDMalformed(Invalid):
     message = _("Invalid id: %(val)s (expecting \"i-...\").")
 
 
-class CouldNotFetchImage(trafficException):
+class CouldNotFetchImage(TrafficException):
     message = _("Could not fetch image %(image_id)s")
 
 
-class TaskAlreadyRunning(trafficException):
+class TaskAlreadyRunning(TrafficException):
     message = _("Task %(task_name)s is already running on host %(host)s")
 
 
-class TaskNotRunning(trafficException):
+class TaskNotRunning(TrafficException):
     message = _("Task %(task_name)s is not running on host %(host)s")
 
 
@@ -1098,27 +1098,27 @@ class InstanceIsLocked(InstanceInvalidState):
     message = _("Instance %(instance_uuid)s is locked")
 
 
-class ConfigDriveMountFailed(trafficException):
+class ConfigDriveMountFailed(TrafficException):
     message = _("Could not mount vfat config drive. %(operation)s failed. "
                 "Error: %(error)s")
 
 
-class ConfigDriveUnknownFormat(trafficException):
+class ConfigDriveUnknownFormat(TrafficException):
     message = _("Unknown config drive format %(format)s. Select one of "
                 "iso9660 or vfat.")
 
 
-class InstanceUserDataTooLarge(trafficException):
+class InstanceUserDataTooLarge(TrafficException):
     message = _("User data too large. User data must be no larger than "
                 "%(maxsize)s bytes once base64 encoded. Your data is "
                 "%(length)d bytes")
 
 
-class InstanceUserDataMalformed(trafficException):
+class InstanceUserDataMalformed(TrafficException):
     message = _("User data needs to be valid base 64.")
 
 
-class UnexpectedTaskStateError(trafficException):
+class UnexpectedTaskStateError(TrafficException):
     message = _("unexpected task state: expecting %(expected)s but "
                 "the actual state is %(actual)s")
 
