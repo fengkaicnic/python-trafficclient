@@ -447,8 +447,8 @@ class HTTPClient(httplib2.Http):
 def get_client_class(version):
     version_map = {
         '1': 'trafficclient.v1.client.Client',
-        '1.1': 'trafficclient.v1_1.client.Client',
-        '2': 'trafficclient.v1_1.client.Client',
+        '1.1': 'trafficclient.v1.client.Client',
+        '2': 'trafficclient.v1.client.Client',
     }
     try:
         client_path = version_map[str(version)]
