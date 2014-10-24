@@ -168,12 +168,14 @@ class OpenstackTrafficShell(object):
         parser.add_argument('--os_service_type',
             help=argparse.SUPPRESS)
 
-        parser.add_argument('--endpoint-type',
+        parser.add_argument('--os-endpoint-type',
             metavar='<endpoint-type>',
             default=utils.env('TRAFFIC_ENDPOINT_TYPE',
                         default=DEFAULT_TRAFFIC_ENDPOINT_TYPE),
             help='Defaults to env[TRAFFIC_ENDPOINT_TYPE] or '
                     + DEFAULT_TRAFFIC_ENDPOINT_TYPE + '.')
+        parser.add_argument('--os_endpoint_type',
+            help=argparse.SUPPRESS)
 
         parser.add_argument('-S', '--os_auth_strategy',
             help='DEPRECATED! This option is completely ignored.')
