@@ -347,7 +347,6 @@ class OpenstackTrafficShell(object):
                     self._get_endpoint(_ksclient, **kwargs)
 
         kwargs = {
-            'token': token,
             'insecure': args.insecure,
             'timeout': args.timeout
         }
