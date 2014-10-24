@@ -15,6 +15,10 @@ from trafficclient import client as tcclient
 from trafficclient import exc
 from trafficclient.common import utils
 
+DEFAULT_OS_COMPUTE_API_VERSION = "1.1"
+DEFAULT_TRAFFIC_ENDPOINT_TYPE = 'publicURL'
+DEFAULT_TRAFFIC_SERVICE_TYPE = 'compute'
+
 logger = logging.getLogger(__name__)
 
 class OpenstackTrafficShell(object):
@@ -83,7 +87,7 @@ class OpenstackTrafficShell(object):
             help='Defaults to env[OS_TENANT_ID]')
         
         parser.add_argument('--insecure',
-        default=utils.env('NOVACLIENT_INSECURE', default=False),
+        default=utils.env('TRAFFICCLIENT_INSECURE', default=False),
         action='store_true',
         help="Explicitly allow novaclient to perform \"insecure\" "
              "SSL (https) requests. The server's certificate will "
@@ -164,12 +168,12 @@ class OpenstackTrafficShell(object):
         parser.add_argument('--os_service_type',
             help=argparse.SUPPRESS)
 
-        parser.add_argument('--os-endpoint-type',
-            default=utils.env('OS_ENDPOINT_TYPE'),
-            help='Defaults to env[OS_ENDPOINT_TYPE]')
-
-        parser.add_argument('--os_endpoint_type',
-            help=argparse.SUPPRESS)
+        parser.add_argument('--endpoint-type',
+            metavar='<endpoint-type>',
+            default=utils.env('TRAFFIC_ENDPOINT_TYPE',
+                        default=DEFAULT_TRAFFIC_ENDPOINT_TYPE),
+            help='Defaults to env[TRAFFIC_ENDPOINT_TYPE] or '
+                    + DEFAULT_TRAFFIC_ENDPOINT_TYPE + '.')
 
         parser.add_argument('-S', '--os_auth_strategy',
             help='DEPRECATED! This option is completely ignored.')
