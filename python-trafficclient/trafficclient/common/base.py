@@ -50,13 +50,27 @@ class Manager(object):
         self.api = api
 
     def _list(self, url, response_key, obj_class=None, body=None):
-        resp, body = self.api.json_request('GET', url)
+        if body:
+            _resp, body = self.api.client.post(url, body=body)
+        else:
+            _resp, body = self.api.client.get(url)
 
         if obj_class is None:
             obj_class = self.resource_class
 
         data = body[response_key]
-        return [obj_class(self, res, loaded=True) for res in data if res]
+        # NOTE(ja): keystone returns values as list as {'values': [ ... ]}
+        #           unlike other services which just return the list...
+        if isinstance(data, dict):
+            try:
+                data = data['values']
+            except KeyError:
+                pass
+
+        with self.completion_cache('human_id', obj_class, mode="w"):
+            with self.completion_cache('uuid', obj_class, mode="w"):
+                return [obj_class(self, res, loaded=True)
+                        for res in data if res]
 
     def _delete(self, url):
         self.api.raw_request('DELETE', url)
