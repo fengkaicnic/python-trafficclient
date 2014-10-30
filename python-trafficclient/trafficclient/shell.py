@@ -351,10 +351,10 @@ class OpenstackTrafficShell(object):
             'timeout': args.timeout
         }
 
-        client = tcclient.Client(api_version, endpoint, **kwargs)
+        self.cs = tcclient.Client(self, api_version, endpoint, **kwargs)
 
         try:
-            args.func(client, args)
+            args.func(self.cs, args)
         except exc.Unauthorized:
             raise exc.CommandError("Invalid OpenStack Identity credentials.")
 
