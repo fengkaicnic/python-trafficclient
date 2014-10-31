@@ -348,7 +348,6 @@ class OpenstackTrafficShell(object):
                     
 
         kwargs = {
-            'endpoint': endpoint,
             'insecure': args.insecure,
             'timeout': args.timeout,
             'auth_url': args.os_auth_url
