@@ -87,7 +87,7 @@ class HTTPClient(httplib2.Http):
             if not auth_url:
                 raise exceptions.EndpointNotFound()
         self.auth_url = auth_url.rstrip('/')
-        self.version = 'v1.1'
+        self.version = '1'
         self.region_name = region_name
         self.endpoint_type = endpoint_type
         self.service_type = service_type
