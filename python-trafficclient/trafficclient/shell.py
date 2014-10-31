@@ -347,11 +347,12 @@ class OpenstackTrafficShell(object):
         kwargs = {
             'endpoint': endpoint,
             'insecure': args.insecure,
-            'timeout': args.timeout
+            'timeout': args.timeout,
+            'auth_url': args.os_auth_url
         }
 
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
-                                  args.os_auth_url, args.os_tenant_name, **kwargs)
+                                  args.os_tenant_name, **kwargs)
 
         try:
             args.func(self.cs, args)
