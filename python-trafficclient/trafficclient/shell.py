@@ -351,7 +351,7 @@ class OpenstackTrafficShell(object):
             'timeout': args.timeout
         }
 
-        self.cs = tcclient.Client(self, api_version, endpoint, **kwargs)
+        self.cs = tcclient.Client(api_version, endpoint, **kwargs)
 
         try:
             args.func(self.cs, args)
