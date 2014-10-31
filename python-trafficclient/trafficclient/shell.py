@@ -331,11 +331,8 @@ class OpenstackTrafficShell(object):
                 raise exc.CommandError("You must provide an auth url via"
                         " either --os-auth-url or via env[OS_AUTH_URL]")
             kwargs = {
-                'username': args.os_username,
-                'password': args.os_password,
                 'tenant_id': args.os_tenant_id,
                 'tenant_name': args.os_tenant_name,
-                'auth_url': args.os_auth_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure
@@ -345,14 +342,16 @@ class OpenstackTrafficShell(object):
 
             endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
+                    
 
         kwargs = {
+            'endpoint': endpoint,
             'insecure': args.insecure,
             'timeout': args.timeout
         }
 
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
-                                  args.os_auth_url, args.os_tenant_id, **kwargs)
+                                  args.os_auth_url, args.os_tenant_name, **kwargs)
 
         try:
             args.func(self.cs, args)
