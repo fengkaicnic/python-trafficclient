@@ -371,6 +371,15 @@ class OpenstackTrafficShell(object):
                     
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
                                   args.os_tenant_name, **kwargs)
+        
+        try:
+            if not utils.isunauthenticated(args.func):
+                self.cs.authenticate()
+        except exc.Unauthorized:
+            raise exc.CommandError("Invalid OpenStack Nova credentials.")
+        except exc.AuthorizationFailure:
+            raise exc.CommandError("Unable to authorize user")
+
 
         try:
             args.func(self.cs, args)

@@ -63,6 +63,10 @@ class HTTPUnauthorized(Unauthorized):
     pass
 
 
+class AuthorizationFailure(Exception):
+    pass
+
+
 class Forbidden(HTTPException):
     """DEPRECATED"""
     code = 403

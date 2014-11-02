@@ -151,7 +151,14 @@ def save_image(data, path):
     finally:
         if path is not None:
             image.close()
-
+            
+def isunauthenticated(f):
+    """
+    Checks to see if the function is marked as not requiring authentication
+    with the @unauthenticated decorator. Returns True if decorator is
+    set to True, False otherwise.
+    """
+    return getattr(f, 'unauthenticated', False)
 
 def integrity_iter(iter, checksum):
     """
