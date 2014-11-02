@@ -348,9 +348,9 @@ class OpenstackTrafficShell(object):
                     self._get_endpoint(_ksclient, **kwargs)
         
         kwargs = {
-                'tenant_id': args.os_tenant_id,
-                'tenant_name': args.os_tenant_name,
                 'auth_url': args.os_auth_url,
+                'region_name': args.os_region_name,
+                'bypass_url': args.bypass_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure,
