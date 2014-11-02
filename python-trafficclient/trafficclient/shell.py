@@ -333,8 +333,6 @@ class OpenstackTrafficShell(object):
             kwargs = {
                 'tenant_id': args.os_tenant_id,
                 'tenant_name': args.os_tenant_name,
-                'username': args.os_username,
-                'password': args.os_password,
                 'auth_url': args.os_auth_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
