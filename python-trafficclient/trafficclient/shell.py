@@ -176,6 +176,18 @@ class OpenstackTrafficShell(object):
                     + DEFAULT_TRAFFIC_ENDPOINT_TYPE + '.')
         parser.add_argument('--os_endpoint_type',
             help=argparse.SUPPRESS)
+        
+        parser.add_argument('--bypass-url',
+            metavar='<bypass-url>',
+            dest='bypass_url',
+            help="Use this API endpoint instead of the Service Catalog")
+        
+        parser.add_argument('--projectid', '--tenant_name', dest='projectid',
+            default=utils.env('NOVA_PROJECT_ID'),
+            help=argparse.SUPPRESS)
+        
+        parser.add_argument('--bypass_url',
+            help=argparse.SUPPRESS)
 
         parser.add_argument('-S', '--os_auth_strategy',
             help='DEPRECATED! This option is completely ignored.')
