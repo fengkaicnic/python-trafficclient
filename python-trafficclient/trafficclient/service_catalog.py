@@ -57,7 +57,7 @@ class ServiceCatalog(object):
             if service.get("type") != service_type:
                 continue
 
-            if (service_name and service_type == 'compute' and
+            if (service_name and service_type == 'traffic' and
                     service.get('name') != service_name):
                 continue
 
@@ -68,8 +68,8 @@ class ServiceCatalog(object):
             endpoints = service['endpoints']
             for endpoint in endpoints:
                 # Ignore 1.0 compute endpoints
-                if service.get("type") == 'compute' and \
-                            endpoint.get('versionId', '2') not in ('1.1', '2'):
+                if service.get("type") == 'traffic' and \
+                            endpoint.get('versionId', '2') not in ('1', '2'):
                     continue
                 if not filter_value or \
                         endpoint.get(attr).lower() == filter_value.lower():
