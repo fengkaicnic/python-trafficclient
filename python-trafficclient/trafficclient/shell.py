@@ -333,6 +333,8 @@ class OpenstackTrafficShell(object):
             kwargs = {
                 'tenant_id': args.os_tenant_id,
                 'tenant_name': args.os_tenant_name,
+                'username': args.os_username,
+                'password': args.os_password,
                 'auth_url': args.os_auth_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
@@ -344,6 +346,16 @@ class OpenstackTrafficShell(object):
 
             endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
+        
+        kwargs = {
+                'tenant_id': args.os_tenant_id,
+                'tenant_name': args.os_tenant_name,
+                'auth_url': args.os_auth_url,
+                'service_type': args.os_service_type,
+                'endpoint_type': args.os_endpoint_type,
+                'insecure': args.insecure,
+                'timeout': args.timeout
+            }
                     
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
                                   args.os_tenant_name, **kwargs)
