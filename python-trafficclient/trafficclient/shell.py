@@ -126,11 +126,6 @@ class OpenstackTrafficShell(object):
         parser.add_argument('--os_region_name',
             help=argparse.SUPPRESS)
 
-        #NOTE(bcwaldon): DEPRECATED
-        parser.add_argument('-R',
-            dest='os_region_name',
-            help='DEPRECATED! Use --os-region-name.')
-
         parser.add_argument('--os-auth-token',
             default=utils.env('OS_AUTH_TOKEN'),
             help='Defaults to env[OS_AUTH_TOKEN]')
@@ -145,6 +140,9 @@ class OpenstackTrafficShell(object):
         parser.add_argument('--os-traffic-url',
             default=utils.env('OS_TRAFFIC_URL'),
             help='Defaults to env[OS_TRAFFIC_URL]')
+        
+        parser.add_argument('--region_name',
+            help=argparse.SUPPRESS)
 
         parser.add_argument('--os_traffic_url',
             help=argparse.SUPPRESS)
@@ -358,10 +356,15 @@ class OpenstackTrafficShell(object):
 
             endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
+                    
+        if args.os_region_name:
+            region_name = args.os_region_name
+        else:
+            region_name = 'RegionOne'
         
         kwargs = {
                 'auth_url': args.os_auth_url,
-                'region_name': args.os_region_name,
+                'region_name': region_name,
                 'bypass_url': args.bypass_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
@@ -416,6 +419,3 @@ def main():
     except Exception, e:
         print >> sys.stderr, e
         sys.exit(1)
-
-
-        

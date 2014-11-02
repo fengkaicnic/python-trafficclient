@@ -61,7 +61,7 @@ class ServiceCatalog(object):
                     service.get('name') != service_name):
                 continue
 
-            if (volume_service_name and service_type == 'volume' and
+            if (volume_service_name and service_type == 'traffic' and
                     service.get('name') != volume_service_name):
                 continue
 
