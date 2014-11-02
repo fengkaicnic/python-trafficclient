@@ -299,8 +299,7 @@ class HTTPClient(httplib2.Http):
     def authenticate(self):
         if has_keyring:
             keys = [self.auth_url, self.user, self.region_name,
-                    self.endpoint_type, self.service_type, self.service_name,
-                    self.volume_service_name]
+                    self.endpoint_type, self.service_type, self.service_name]
             for index, key in enumerate(keys):
                 if key is None:
                     keys[index] = '?'

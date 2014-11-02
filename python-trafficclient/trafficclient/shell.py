@@ -165,6 +165,19 @@ class OpenstackTrafficShell(object):
 
         parser.add_argument('--os_service_type',
             help=argparse.SUPPRESS)
+        
+        parser.add_argument('--service-type',
+            metavar='<service-type>',
+            help='Defaults to compute for most actions')
+        parser.add_argument('--service_type',
+            help=argparse.SUPPRESS)
+
+        parser.add_argument('--service-name',
+            metavar='<service-name>',
+            default=utils.env('NOVA_SERVICE_NAME'),
+            help='Defaults to env[NOVA_SERVICE_NAME]')
+        parser.add_argument('--service_name',
+            help=argparse.SUPPRESS)
 
         parser.add_argument('--os-endpoint-type',
             metavar='<endpoint-type>',
