@@ -368,15 +368,10 @@ class OpenstackTrafficShell(object):
 
             endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
-                    
-        if args.os_region_name:
-            region_name = args.os_region_name
-        else:
-            region_name = 'RegionOne'
         
         kwargs = {
                 'auth_url': args.os_auth_url,
-                'region_name': region_name,
+                'region_name': args.os_region_name,
                 'bypass_url': args.bypass_url,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure,
