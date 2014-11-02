@@ -17,7 +17,7 @@ from trafficclient.common import utils
 
 DEFAULT_OS_COMPUTE_API_VERSION = "1.1"
 DEFAULT_TRAFFIC_ENDPOINT_TYPE = 'publicURL'
-DEFAULT_TRAFFIC_SERVICE_TYPE = 'compute'
+DEFAULT_TRAFFIC_SERVICE_TYPE = 'traffic'
 
 logger = logging.getLogger(__name__)
 
