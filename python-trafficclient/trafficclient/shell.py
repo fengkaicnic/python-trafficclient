@@ -359,7 +359,6 @@ class OpenstackTrafficShell(object):
                 'username': args.os_username,
                 'password': args.os_password,
                 'auth_url': args.os_auth_url,
-                'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure,
                 'timeout': args.timeout
@@ -379,7 +378,6 @@ class OpenstackTrafficShell(object):
                 'auth_url': args.os_auth_url,
                 'region_name': region_name,
                 'bypass_url': args.bypass_url,
-                'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure,
                 'timeout': args.timeout
