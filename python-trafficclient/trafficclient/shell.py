@@ -338,7 +338,8 @@ class OpenstackTrafficShell(object):
                 'auth_url': args.os_auth_url,
                 'service_type': args.os_service_type,
                 'endpoint_type': args.os_endpoint_type,
-                'insecure': args.insecure
+                'insecure': args.insecure,
+                'timeout': args.timeout
             }
             _ksclient = self._get_ksclient(**kwargs)
             token = args.os_auth_token or _ksclient.auth_token
@@ -346,13 +347,6 @@ class OpenstackTrafficShell(object):
             endpoint = args.os_traffic_url or \
                     self._get_endpoint(_ksclient, **kwargs)
                     
-
-        kwargs = {
-            'insecure': args.insecure,
-            'timeout': args.timeout,
-            'auth_url': args.os_auth_url
-        }
-
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
                                   args.os_tenant_name, **kwargs)
 
