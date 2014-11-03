@@ -165,6 +165,8 @@ class HTTPClient(httplib2.Http):
         kwargs.setdefault('headers', kwargs.get('headers', {}))
         kwargs['headers']['User-Agent'] = self.USER_AGENT
         kwargs['headers']['Accept'] = 'application/json'
+        kwargs['headers']['username'] = self.user
+        kwargs['headers']['password'] = self.password
         if 'body' in kwargs:
             kwargs['headers']['Content-Type'] = 'application/json'
             kwargs['body'] = json.dumps(kwargs['body'])
