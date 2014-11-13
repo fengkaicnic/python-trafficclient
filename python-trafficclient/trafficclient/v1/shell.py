@@ -3,6 +3,7 @@ import argparse
 import os
 import copy
 import sys
+from trafficclient import utils
 
 if os.name == 'nt':
     import msvcrt
@@ -37,8 +38,10 @@ def do_delete(cs, args):
     cs.traffic.delete(args)
 
 def do_list(cs, args):
-    cs.traffic.list(args)
-    
+    id_col = 'ID'
+    columns = [id_col, 'Name', 'Status', 'Networks']
+    utils.print_list(cs.traffic.list(args), columns,
+                     sortby_index=1)
 
 @utils.arg('--instance',
     default=None,
