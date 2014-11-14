@@ -25,7 +25,7 @@ DEFAULT_PAGE_SIZE = 20
 
 class Traffic(base.Resource):
     def __repr__(self):
-        return "<Image %s>" % self._info
+        return "<Traffic %s>" % self._info
 
     def update(self, **fields):
         self.manager.update(self, **fields)

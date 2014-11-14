@@ -19,7 +19,6 @@ import trafficclient.v1
      metavar='<instance>',
      help="Instance ID (see 'nova list').")
 @utils.arg('--band',
-     default=None,
      metavar='<band>',
      help="the network band of the instance")
 @utils.arg('--prio',
