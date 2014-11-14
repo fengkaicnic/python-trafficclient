@@ -18,7 +18,11 @@ Base utilities to build API operation managers and objects on top of.
 """
 
 import copy
-
+import contextlib
+import hashlib
+import os
+from trafficclient import exceptions
+from trafficclient import utils
 
 # Python 2.4 compat
 try:
@@ -71,6 +75,65 @@ class Manager(object):
             with self.completion_cache('uuid', obj_class, mode="w"):
                 return [obj_class(self, res, loaded=True)
                         for res in data if res]
+                
+    @contextlib.contextmanager
+    def completion_cache(self, cache_type, obj_class, mode):
+        """
+        The completion cache store items that can be used for bash
+        autocompletion, like UUIDs or human-friendly IDs.
+
+        A resource listing will clear and repopulate the cache.
+
+        A resource create will append to the cache.
+
+        Delete is not handled because listings are assumed to be performed
+        often enough to keep the cache reasonably up-to-date.
+        """
+        base_dir = utils.env('NOVACLIENT_UUID_CACHE_DIR',
+                             default="~/.novaclient")
+
+        # NOTE(sirp): Keep separate UUID caches for each username + endpoint
+        # pair
+        username = utils.env('OS_USERNAME', 'NOVA_USERNAME')
+        url = utils.env('OS_URL', 'NOVA_URL')
+        uniqifier = hashlib.md5(username + url).hexdigest()
+
+        cache_dir = os.path.expanduser(os.path.join(base_dir, uniqifier))
+
+        try:
+            os.makedirs(cache_dir, 0755)
+        except OSError:
+            # NOTE(kiall): This is typicaly either permission denied while
+            #              attempting to create the directory, or the directory
+            #              already exists. Either way, don't fail.
+            pass
+
+        resource = obj_class.__name__.lower()
+        filename = "%s-%s-cache" % (resource, cache_type.replace('_', '-'))
+        path = os.path.join(cache_dir, filename)
+
+        cache_attr = "_%s_cache" % cache_type
+
+        try:
+            setattr(self, cache_attr, open(path, mode))
+        except IOError:
+            # NOTE(kiall): This is typicaly a permission denied while
+            #              attempting to write the cache file.
+            pass
+
+        try:
+            yield
+        finally:
+            cache = getattr(self, cache_attr, None)
+            if cache:
+                cache.close()
+                delattr(self, cache_attr)
+
+    def write_to_completion_cache(self, cache_type, val):
+        cache = getattr(self, "_%s_cache" % cache_type, None)
+        if cache:
+            cache.write("%s\n" % val)
+
 
     def _delete(self, url):
         self.api.raw_request('DELETE', url)
