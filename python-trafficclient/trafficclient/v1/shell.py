@@ -4,6 +4,7 @@ import os
 import copy
 import sys
 from trafficclient import utils
+from trafficclient import exceptions
 
 if os.name == 'nt':
     import msvcrt
@@ -27,6 +28,12 @@ import trafficclient.v1
     help="the priority of this traffic controll.")
 def do_create(cs, args):
     
+    if not args.band:
+        raise exceptions.CommandError("you need to specify a band ")
+    if not args.prio:
+        raise exceptions.CommandError("you need to specify a prio")
+    if not args.instance:
+        raise exceptions.CommandError('you need to specify a instance ID')
     cs.traffic.create(args)
 
 @utils.arg('--instance',
