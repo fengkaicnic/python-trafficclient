@@ -30,8 +30,6 @@ def do_create(cs, args):
     
     if not args.band:
         raise exceptions.CommandError("you need to specify a band ")
-    if not args.prio:
-        raise exceptions.CommandError("you need to specify a prio")
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
     cs.traffic.create(args)
