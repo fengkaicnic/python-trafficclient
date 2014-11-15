@@ -135,7 +135,7 @@ class TrafficManager(base.Manager):
         qparams['band'] = band
         qparams['prio'] = prio
         
-        resp, body_iter = self.api.client.post('/create', body=qparams)
+        resp, body_iter = self.api.client.post('/traffic/create', body=qparams)
         body = json.loads(''.join([c for c in body_iter]))
         return Traffic(self, self._format_traffic_meta_for_user(body['traffic']))
 
@@ -148,7 +148,7 @@ class TrafficManager(base.Manager):
         return self._list(url, 'traffic')
     
     def show(self, instance_id):
-        resp, body = self.api.client.raw_request('HEAD', '/show?%s' % instance_id)
+        resp, body = self.api.client.raw_request('HEAD', '/traffic/show?%s' % instance_id)
         meta = self._traffic_meta_from_headers(dict(resp.getheaders()))
         return Traffic(self, meta)
 
