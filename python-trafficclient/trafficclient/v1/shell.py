@@ -32,19 +32,19 @@ def do_create(cs, args):
         raise exceptions.CommandError("you need to specify a band ")
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
-    cs.traffic.create(args)
+    cs.traffic.create(cs, args)
 
 @utils.arg('--instance',
     default=None,
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_delete(cs, args):
-    cs.traffic.delete(args)
+    cs.traffic.delete(cs, args)
 
 def do_list(cs, args):
     id_col = 'ID'
     columns = [id_col, 'Name', 'Status', 'Networks']
-    utils.print_list(cs.traffic.list(args), columns,
+    utils.print_list(cs.traffic.list(cs, args), columns,
                      sortby_index=1)
 
 @utils.arg('--instance',
@@ -52,5 +52,5 @@ def do_list(cs, args):
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_show(cs, args):
-    cs.traffic.show(args)
+    cs.traffic.show(cs, args)
 
