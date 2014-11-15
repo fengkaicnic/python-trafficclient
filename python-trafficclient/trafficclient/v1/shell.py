@@ -32,7 +32,7 @@ def do_create(cs, args):
         raise exceptions.CommandError("you need to specify a band ")
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
-    cs.traffic.create(cs, args)
+    cs.traffic.create(args.instance, args.band)
 
 @utils.arg('--instance',
     default=None,
