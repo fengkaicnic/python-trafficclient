@@ -135,7 +135,7 @@ class TrafficManager(base.Manager):
         qparams['band'] = band
         qparams['prio'] = prio
         
-        resp, body_iter = self.api.raw_request('POST', '/create', body=qparams)
+        resp, body_iter = self.api.post('POST', '/create', body=qparams)
         body = json.loads(''.join([c for c in body_iter]))
         return Traffic(self, self._format_traffic_meta_for_user(body['traffic']))
 
