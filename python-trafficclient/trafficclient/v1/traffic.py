@@ -129,7 +129,7 @@ class TrafficManager(base.Manager):
             # Cannot determine size of input image
             return None
 
-    def create(self, instance_id, band, prio):
+    def create(self, instance_id, band, prio=1):
         qparams = {}
         qparams['instance_id'] = instance_id
         qparams['band'] = band
