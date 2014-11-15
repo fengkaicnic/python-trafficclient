@@ -81,7 +81,7 @@ class TrafficManager(base.Manager):
         :param image: image object or id to look up
         :rtype: :class:`Image`
         """
-        resp, body = self.api.raw_request('HEAD', '/v1/images/%s' % image_id)
+        resp, body = self.api.client.raw_request('HEAD', '/v1/images/%s' % image_id)
         meta = self._image_meta_from_headers(dict(resp.getheaders()))
         return Traffic(self, meta)
 
@@ -93,7 +93,7 @@ class TrafficManager(base.Manager):
         :rtype: iterable containing image data
         """
         image_id = base.getid(image)
-        resp, body = self.api.raw_request('GET', '/v1/images/%s' % image_id)
+        resp, body = self.api.client.raw_request('GET', '/v1/images/%s' % image_id)
         checksum = resp.getheader('x-image-meta-checksum', None)
         if do_checksum and checksum is not None:
             return utils.integrity_iter(body, checksum)
@@ -135,7 +135,7 @@ class TrafficManager(base.Manager):
         qparams['band'] = band
         qparams['prio'] = prio
         
-        resp, body_iter = self.api.post('POST', '/create', body=qparams)
+        resp, body_iter = self.api.client.post('POST', '/create', body=qparams)
         body = json.loads(''.join([c for c in body_iter]))
         return Traffic(self, self._format_traffic_meta_for_user(body['traffic']))
 
@@ -148,7 +148,7 @@ class TrafficManager(base.Manager):
         return self._list(url, 'traffic')
     
     def show(self, instance_id):
-        resp, body = self.api.raw_request('HEAD', '/show?%s' % instance_id)
+        resp, body = self.api.client.raw_request('HEAD', '/show?%s' % instance_id)
         meta = self._traffic_meta_from_headers(dict(resp.getheaders()))
         return Traffic(self, meta)
 
@@ -186,7 +186,7 @@ class TrafficManager(base.Manager):
             hdrs['x-glance-api-copy-from'] = copy_from
 
         url = '/v1/images/%s' % base.getid(image)
-        resp, body_iter = self.api.raw_request(
+        resp, body_iter = self.api.client.raw_request(
                 'PUT', url, headers=hdrs, body=image_data)
         body = json.loads(''.join([c for c in body_iter]))
         return Traffic(self, self._format_image_meta_for_user(body['image']))
