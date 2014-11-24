@@ -39,6 +39,8 @@ def do_create(cs, args):
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_delete(cs, args):
+    if not args.instance:
+        raise exceptions.CommandError("you need to specify a instance ID")
     cs.traffic.delete(args.instance)
 
 def do_list(cs, args):
