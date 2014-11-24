@@ -147,7 +147,7 @@ class TrafficManager(base.Manager):
         
     def list(self, *args):
         url = '/traffic/list'
-        return self._list(url, 'traffic')
+        return self._list(url, 'traffics')
     
     def show(self, instance_id):
         resp, body = self.api.client.raw_request('HEAD', '/traffic/show?%s' % instance_id)
