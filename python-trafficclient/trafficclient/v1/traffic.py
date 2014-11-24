@@ -141,7 +141,9 @@ class TrafficManager(base.Manager):
 
     def delete(self, instance_id): 
         """Delete an image."""
-        self.api.client.delete("/traffic/delete/%s" % instance_id)
+        qparams = {}
+        qparams['instance_id'] = instance_id
+        self.api.client.post("/traffic/delete", body=qparams)
         
     def list(self, *args):
         url = '/traffic/list'
