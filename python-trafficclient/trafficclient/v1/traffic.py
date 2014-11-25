@@ -153,8 +153,7 @@ class TrafficManager(base.Manager):
         qparams = {}
         qparams['instance_id'] = instance_id
         resp, body = self.api.client.post('/traffic/show', body=qparams)
-        meta = self._traffic_meta_from_headers(dict(resp.getheaders()))
-        return Traffic(self, meta)
+        return body
 
     
     def update(self, image, **kwargs):

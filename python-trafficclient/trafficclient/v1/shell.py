@@ -59,7 +59,7 @@ def do_list(cs, args):
 def do_show(cs, args):
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
-    cs.traffic.show(args.instance)
+    utils.print_dict(cs.traffic.show(args.instance))
     
 def _find_host(cs, instanceid):
     cs.traffic.show(cs, instanceid)
