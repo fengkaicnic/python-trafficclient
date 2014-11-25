@@ -136,8 +136,7 @@ class TrafficManager(base.Manager):
         qparams['prio'] = prio
         
         resp, body_iter = self.api.client.post('/traffic/create', body=qparams)
-        body = json.loads(''.join([c for c in body_iter]))
-        return Traffic(self, self._format_traffic_meta_for_user(body['traffic']))
+        return body_iter
 
     def delete(self, instance_id): 
         """Delete an image."""
