@@ -5,6 +5,7 @@ import copy
 import sys
 from trafficclient import utils
 from trafficclient import exceptions
+import time
 
 if os.name == 'nt':
     import msvcrt
@@ -33,6 +34,7 @@ def do_create(cs, args):
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
     cs.traffic.create(args.instance, args.band)
+    time.sleep(2)
     utils.print_dict(_find_tqdisc(cs, args.instance))
 #    host, mac = _find_host(args.instance)
 #    info = {'host':host, 'ip':ip}
