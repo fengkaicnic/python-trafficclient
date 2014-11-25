@@ -33,6 +33,7 @@ def do_create(cs, args):
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
     cs.traffic.create(args.instance, args.band)
+    utils.print_dict(_find_tqdisc(cs, args.instance))
 #    host, mac = _find_host(args.instance)
 #    info = {'host':host, 'ip':ip}
     
@@ -61,5 +62,5 @@ def do_show(cs, args):
         raise exceptions.CommandError('you need to specify a instance ID')
     utils.print_dict(cs.traffic.show(args.instance))
     
-def _find_host(cs, instanceid):
-    cs.traffic.show(cs, instanceid)
+def _find_tqdisc(cs, instanceid):
+    cs.traffic.show(instanceid)
