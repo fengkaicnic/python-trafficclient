@@ -150,7 +150,9 @@ class TrafficManager(base.Manager):
         return self._list(url, 'traffics')
     
     def show(self, instance_id):
-        resp, body = self.api.client.raw_request('HEAD', '/traffic/show?%s' % instance_id)
+        qparams = {}
+        qparams['instance_id'] = instance_id
+        resp, body = self.api.client.post('HEAD', '/traffic/show', body=qparams)
         meta = self._traffic_meta_from_headers(dict(resp.getheaders()))
         return Traffic(self, meta)
 
