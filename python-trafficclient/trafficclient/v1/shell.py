@@ -63,4 +63,4 @@ def do_show(cs, args):
     utils.print_dict(cs.traffic.show(args.instance))
     
 def _find_tqdisc(cs, instanceid):
-    cs.traffic.show(instanceid)
+    return cs.traffic.show(instanceid)
