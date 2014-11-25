@@ -45,7 +45,7 @@ def do_delete(cs, args):
 
 def do_list(cs, args):
     id_col = 'ID'
-    columns = [id_col, 'Instanceid', 'Ip', 'Band']
+    columns = [id_col, 'Instanceid', 'Ip', 'Host', 'Band']
     utils.print_list(cs.traffic.list(cs, args), columns)
 
 @utils.arg('--instance',
