@@ -33,6 +33,10 @@ def do_create(cs, args):
     if not args.instance:
         raise exceptions.CommandError('you need to specify a instance ID')
     cs.traffic.create(args.instance, args.band)
+#    host, mac = _find_host(args.instance)
+#    info = {'host':host, 'ip':ip}
+    
+#    utils.print_dict(info)
 
 @utils.arg('--instance',
     default=None,
@@ -53,5 +57,9 @@ def do_list(cs, args):
     metavar='<instance>',
     help="The ID of the instance to delete.")
 def do_show(cs, args):
-    cs.traffic.show(cs, args)
-
+    if not args.instance:
+        raise exceptions.CommandError('you need to specify a instance ID')
+    cs.traffic.show(args.instance)
+    
+def _find_host(cs, instanceid):
+    cs.traffic.show(cs, instanceid)
