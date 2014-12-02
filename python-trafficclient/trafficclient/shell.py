@@ -375,7 +375,8 @@ class OpenstackTrafficShell(object):
                 'bypass_url': args.bypass_url,
                 'endpoint_type': args.os_endpoint_type,
                 'insecure': args.insecure,
-                'timeout': args.timeout
+                'timeout': args.timeout,
+                'http_log_debug': options.debug
             }
                     
         self.cs = tcclient.Client(api_version, args.os_username, args.os_password, 
